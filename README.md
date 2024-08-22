@@ -1,3 +1,5 @@
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://www.linkedin.com/in/andreas-nicolaou-a11009164)
+
 # QuickLookup
 
 ## Description
@@ -59,9 +61,10 @@ Lastly, you must instantiate a `QL::QuickLookup` object and call the `QuickLooku
 - `Window Height` defines the **height** of the application's console window measured in characters.
 - `Window Margin` defines the **left and right** margin of the application's console window measured in characters.
 
-Running `QuickLookup::run(40, 10, 1)` will generate a terminal of size `40 x 10`, with 1 empty column on either side, and will be showing up to 6 search results.
+Running `QuickLookup::run(40, 10, 1)` will generate a terminal of size `40 x 10`, with `1` empty column on either side, and will be showing up to `6` search results.
 
 For ***Unicode support***, you should check out [this](https://stackoverflow.com/questions/78894522/inconsistent-format-of-utf-8-characters-in-c/) question's answer to configure the console to accept Unicode Characters. Do note that you currently can't copy a Unicode string to clipboard.
+
 ## Contributing
 Contributions are greatly appreciated! You may either create an issue for any bugs or feature requests, or:
 1. Fork the repository.
