@@ -1,4 +1,4 @@
-# QuickLookup# QuickLookup
+# QuickLookup
 
 ## Description
 QuickLookup is a project that provides a fast and convinient way of searching for information from a custom data source.
@@ -21,12 +21,12 @@ Currently, the projecy is only available for Windows, but support for other oper
 2. Create a new directory for the build files: `mkdir out/build`
 3. Navigate to the directory: `cd out/build`
 4. Compile the project (flags are optional): `cmake ../.. -DALIGN_CENTER=ON -DGETCH_INPUT=ON && cmake --build .`
-5. Run the executable `out/build/Debug/QuickLookupExample.exe` (Preferably by opening the file)
+5. Run the executable `out/build/Debug/QuickLookupExample.exe` (Preferably by opening the file so you don't mess up your terminal window)
 
 Alternatively you could open the project in Visual Studio and build it using one of the presets.
 
 ## Usage
-The following instructions will guide you on using a QuickLookup application, I recommend you try out the Example Application which you can build at [Installation](#installation). 
+The following instructions will guide you on using a QuickLookup application, I recommend you try out the Example Application which you can build using the instructions at [Installation](#installation). 
 For instructions on how to implement the project for your own use case, refer to [Implementation](#implementation)
 
 1. Open the QuickLookup application.
@@ -54,7 +54,12 @@ You may implement this in any way you like, for example, by searching a local or
 Each `Row` in the `rows` vector contains a `string display`. This is the string that will be displayed in the console. This can be anything you like e.g the key, value, or any combination of the 2.
 Each `Row` also contains a `string value` which is the string that will be copied to the clipboard when the user presses `Ctrl + C` while this row is selected.
 
-Lastly, you must instantiate a `QL::QuickLookup` object and call the `QuickLookup::run()` function to start the application.
+Lastly, you must instantiate a `QL::QuickLookup` object and call the `QuickLookup::run(int windowWidth, int windowHeight, int windowMargin)` function to start the application with the following settings:
+- `Window Width` defines the **width** of the application's console window measured in characters.
+- `Window Height` defines the **height** of the application's console window measured in characters.
+- `Window Margin` defines the **left and right** margin of the application's console window measured in characters.
+
+Running `QuickLookup::run(40, 10, 1)` will generate a terminal of size `40 x 10`, with 1 empty column on either side, and will be showing up to 6 search results.
 
 For ***Unicode support***, you should check out [this](https://stackoverflow.com/questions/78894522/inconsistent-format-of-utf-8-characters-in-c/) question's answer to configure the console to accept Unicode Characters. Do note that you currently can't copy a Unicode string to clipboard.
 ## Contributing
