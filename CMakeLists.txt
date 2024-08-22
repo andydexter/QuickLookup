@@ -11,11 +11,21 @@ endif()
 
 project ("QuickLookup")
 
+option(ALIGN_CENTER "Enable center alignment for search results" OFF)
+if(ALIGN_CENTER)
+	 add_definitions(-DALIGN_CENTER)
+endif()
+
+option(GETCH_INPUT "Enable using getch() for search bar input i.e. refreshing search results after each character" OFF)
+if(GETCH_INPUT)
+	 add_definitions(-DGETCH_INPUT)
+endif()
+
 # Add source to this project's executable.
-add_executable (QuickLookup "QuickLookup.cpp" "QuickLookup.h")
+add_executable (QuickLookupExample  "QuickLookup.h" "Example.cpp" "ClipboardWin.h" "ClipboardLin.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET QuickLookup PROPERTY CXX_STANDARD 20)
+  set_property(TARGET QuickLookupExample PROPERTY CXX_STANDARD 20)
 endif()
 
 # TODO: Add tests and install targets if needed.
