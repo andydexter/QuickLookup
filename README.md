@@ -4,8 +4,11 @@
 
 ## Description
 QuickLookup is a project that provides a fast and convinient way of searching for information from a custom data source.
+
 A console based program, it is designed to help with and streamline clerical work or similar tasks, for example, frequently having to look up employee IDs to copy into documents, where the current system is slow and cumbersome.
+
 You may implement the "lookup" function to search for any information you need, according to your use case.
+
 There are also a variety of customization options available, such as changing the input type, window size, display format, and more.
 
 Currently, the projecy is only available for Windows, but support for other operating systems is planned for the near future.
@@ -29,6 +32,7 @@ Alternatively you could open the project in Visual Studio and build it using one
 
 ## Usage
 The following instructions will guide you on using a QuickLookup application, I recommend you try out the Example Application which you can build using the instructions at [Installation](#installation). 
+
 For instructions on how to implement the project for your own use case, refer to [Implementation](#implementation)
 
 1. Open the QuickLookup application.
@@ -46,6 +50,7 @@ For instructions on how to implement the project for your own use case, refer to
 You may customize the application by enabling or disabling any of the following options by adding the `-DOPTION=ON/OFF` flag when compiling the project:
 
 - `ALIGN_CENTER` (Default `OFF`) - Aligns the search results to the center of the console window.
+
 - `GETCH_INPUT` (Default `OFF`) - Uses the `_getch()` function for input instead of the standard input stream. This allows for refreshing search results after every character entry giving **real-time lookup**. When off, you must press enter before previewing any results. This option is very handy but may *not* work on all operating systems, so it is turned off by default. It may also not be optimal in cases where the `lookup` function is slow. It does *not* work with **Unicode** characters.
 
 ## Implementation
