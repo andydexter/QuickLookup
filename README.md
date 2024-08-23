@@ -11,7 +11,7 @@ You may implement the "lookup" function to search for any information you need, 
 
 There are also a variety of customization options available, such as changing the input type, window size, display format, and more.
 
-Currently, the projecy is only available for Windows, but support for other operating systems is planned for the near future.
+Currently, the projecy is only available for Windows, but support for other operating systems is [planned](https://github.com/andydexter/QuickLookup/milestone/1) for the near future.
 
 ## Features
 - Easy and intuitive interface
