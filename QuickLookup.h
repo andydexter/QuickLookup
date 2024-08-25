@@ -118,18 +118,20 @@ namespace QL {
 		*/
 		void lookup(string);
 
-		//Get search string from user and lookup results
+		//Enter Search mode, get search string from user and lookup results
 		void search() {
 			selectedRow = -1;
 			update_search_results();
 			set_cursor_to_search();
+
 #if(GETCH_INPUT)
+
 			string s;
 			char c;
-			//Keep getting characters until ENTER or CTRL+C
-			while ((c = _getch()) != 0x0D && c != 0x3) {
+			// Keep getting characters until ENTER, CTRL+C, DOWN ARROW or RIGHT ARROW is pressed.
+			while ((c = _getch()) != 0x0D && c != 0x3 && c != 0x50 && c != 0x4D) {
 				set_cursor_to_search((int)s.length() + 1);
-				//Handles backspace
+				// Handles backspace
 				if (c == 0x08) { //BACKSPACE
 					if (!s.empty()) {
 						s.pop_back();
@@ -137,27 +139,31 @@ namespace QL {
 						cout << ' ';
 					}
 				}
-				//Stop handling characters after max length has been reached.
+				// Stop handling characters after max length has been reached.
 				else if (s.length() == windowWidth - 2 * windowMargin) continue;
-				//Prints printable characters
+				// Prints printable characters
 				else if(0x20<=c && c<=0x7e) {
 					s += c;
 					cout << c;
 				}
-				//Handle Control Sequence
+				// Handle Control Sequence
 				else if (c == 0x0 || (uint8_t)c == 0xE0) {
-					//Consume Scan Code and Do Nothing
-					_getch();
+					// Special return value is consumed
+					// next iteration will process the second byte of the sequence.
 					continue;
 				}
 				lookup(s);
 				update_search_results();
 		}
+
 #else
+
 			string s;
 			getline(cin, s);
 			lookup(s);
+
 #endif
+
 			navigate_upmost();
 		}
 
