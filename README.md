@@ -30,6 +30,8 @@ Currently, the projecy is only available for Windows, but support for other oper
 
 Alternatively you could open the project in Visual Studio and build it using one of the presets.
 
+It is reccomended after successfully building a working executable, to tie it to a keyboard shortcut or hotkey for easy, fast and accessible launch. 
+
 ## Usage
 The following instructions will guide you on using a QuickLookup application, I recommend you try out the Example Application which you can build using the instructions at [Installation](#installation). 
 
