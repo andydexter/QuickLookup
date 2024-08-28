@@ -71,7 +71,7 @@ Running `QuickLookup::run(40, 10, 1)` will generate a terminal of size `40 x 10`
 For ***Unicode support***, you should check out [this](https://stackoverflow.com/questions/78894522/inconsistent-format-of-utf-8-characters-in-c/) question's answer to configure the console to accept Unicode Characters. Do note that you currently can't copy a Unicode string to clipboard, though there are [plans](https://github.com/andydexter/QuickLookup/issues/2) for it.
 
 ## Contributing
-Contributions are greatly appreciated! You may either create an issue for any bugs or feature requests, or:
+Contributions are greatly appreciated! Feel free to share any questions or ideas in the **Discussions** tab, create an **Issue** for any bugs or feature requests, or:
 1. Fork the repository.
 2. Create a new branch: `git checkout -b feature/your-feature`
 3. Make your changes and commit them: `git commit -m 'Add some feature'`
