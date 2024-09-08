@@ -149,7 +149,7 @@ namespace QL {
 			string s;
 			getline(cin, s);
 			lookup(s);
-			return QLNav::MOVE_DOWN;
+			return QLNav::NavAction(QLNav::MOVE_DOWN, 0);
 #endif
 		}
 
