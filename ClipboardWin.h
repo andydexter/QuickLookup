@@ -33,6 +33,7 @@ namespace ClipboardUtils {
 		HGLOBAL globMem = GlobalAlloc(GMEM_MOVEABLE, sizeof(s));
 		if (globMem==0) throw "Failed to allocate memory for clipboard";
 		HGLOBAL writeableMem =  GlobalLock(globMem);
+		if (writeableMem == 0) throw "Failed to lock memory for clipboard";
 		memcpy(writeableMem, s.c_str(), sizeof(s));
 		GlobalUnlock(globMem);
 		OpenClipboard(0);

@@ -22,7 +22,7 @@ if(GETCH_INPUT)
 endif()
 
 # Add source to this project's executable.
-add_executable (QuickLookupExample  "QuickLookup.h" "Example.cpp" "ClipboardWin.h" "ClipboardLin.h")
+add_executable (QuickLookupExample  "QuickLookup.h" "Example.cpp" "ClipboardWin.h" "ClipboardLin.h" "Navigation.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET QuickLookupExample PROPERTY CXX_STANDARD 20)
