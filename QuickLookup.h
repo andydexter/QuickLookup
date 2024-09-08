@@ -34,6 +34,8 @@ SOFTWARE.
 	#include "ClipboardLin.h"	
 #endif
 
+#include "Navigation.h"
+
 using namespace std;
 
 namespace QL {
@@ -57,45 +59,38 @@ namespace QL {
 			init_screen();
 			bool keepRunning = true;
 			while (keepRunning) {
-				search();
+				QLNav::NavAction action = search();
 
 				// Navigate through search results
 				bool keepNavigating = true;
 				while (keepNavigating) {
-					switch (_getch()) {
-					case 0xE0: //ARROW CONTROL SEQUENCE
-						switch (_getch()) { //SECOND ARROW KEY CALL
-						case 0x48: // UP ARROW
-						case 0x4B: // LEFT ARROW
-							navigate_up();
-							break;
-						case 0x50: // DOWN ARROW
-						case 0x4D: // RIGHT ARROW
-							navigate_down();
-							break;
-						case 0x47: // HOME
-						case 0x49: // PG UP
-							navigate_upmost();
-							break;
-						case 0x4F: // END
-						case 0x51: // PG DOWN
-							navigate_downmost();
-							break;
-						}
-						break;
-					case 0x0D: // ENTER; GO Down
+
+					//Act according to navigation action
+					switch (action.type) {
+					case QLNav::MOVE_DOWN:
 						navigate_down();
 						break;
-					case 0x03: // CTRL+C; Copy and Quit QL 
-						if (rows.size() > selectedRow) {
+					case QLNav::MOVE_UP:
+						navigate_up();
+						break;
+					case QLNav::GO_UPMOST:
+						navigate_upmost();
+						break;
+					case QLNav::GO_DOWNMOST:
+						navigate_downmost();
+						break;
+					case QLNav::COPY_AND_QUIT:
+						if (rows.size() > selectedRow) { // If valid row is selected, copy to clipboard
 							ClipboardUtils::copy_string_to_clipboard(rows[selectedRow].value);
 						}
-						keepRunning = false;
+						keepRunning = false; // Stop outer loop
 						[[fallthrough]];
-					case 0x1A: // CTRL+Z; Search Again
-						keepNavigating = false;
+					case QLNav::SEARCH: // Go to Search Again
+						keepNavigating = false; // Stop inner loop
 						break;
 					}
+					//Get next action if user hasn't quit navigation
+					if(keepNavigating) action = QLNav::readAction();
 				}
 			}
 		}
@@ -119,7 +114,8 @@ namespace QL {
 		void lookup(string);
 
 		//Enter Search mode, get search string from user and lookup results
-		void search() {
+		//Returns the first navigation action after search is complete
+		QLNav::NavAction search() {
 			selectedRow = -1;
 			update_search_results();
 			set_cursor_to_search();
@@ -127,44 +123,34 @@ namespace QL {
 #if(GETCH_INPUT)
 
 			string s;
-			char c;
-			// Keep getting characters until ENTER, CTRL+C, DOWN ARROW or RIGHT ARROW is pressed.
-			while ((c = _getch()) != 0x0D && c != 0x3 && c != 0x50 && c != 0x4D) {
+			QLNav::NavAction action;
+			// Keep getting inputs while they're printable characters or backspace
+			while (((action = QLNav::readAction()).type == QLNav::PRINTABLE_CHARACTER) || action.type == QLNav::BACKSPACE) {
+
 				set_cursor_to_search((int)s.length() + 1);
 				// Handles backspace
-				if (c == 0x08) { //BACKSPACE
-					if (!s.empty()) {
-						s.pop_back();
-						set_cursor_to_search((int)s.length() + 1);
-						cout << ' ';
-					}
+				if (action.type == QLNav::BACKSPACE && !s.empty()) { //BACKSPACE
+					s.pop_back();
+					set_cursor_to_search((int)s.length() + 1);
+					cout << ' ';
 				}
-				// Stop handling characters after max length has been reached.
-				else if (s.length() == windowWidth - 2 * windowMargin) continue;
-				// Prints printable characters
-				else if(0x20<=c && c<=0x7e) {
-					s += c;
-					cout << c;
-				}
-				// Handle Control Sequence
-				else if (c == 0x0 || (uint8_t)c == 0xE0) {
-					// Special return value is consumed
-					// next iteration will process the second byte of the sequence.
-					continue;
+				// Prints printable characters as long as string length is less than the available space.
+				else if(action.type == QLNav::PRINTABLE_CHARACTER && s.length() < windowWidth - 2 * windowMargin) {
+					s += (char)action.navValue;
+					cout << (char)action.navValue;
 				}
 				lookup(s);
 				update_search_results();
-		}
+			}
+			return action;
 
 #else
 
 			string s;
 			getline(cin, s);
 			lookup(s);
-
+			return QLNav::MOVE_DOWN;
 #endif
-
-			navigate_upmost();
 		}
 
 		//Set cursor position to coordinates
@@ -202,9 +188,14 @@ namespace QL {
 
 		//Sets window size and clears screen
 		void init_screen() {
-			//Set terminal size and clear terminal
-			string command = "mode " + to_string(windowWidth) + ", " + to_string(windowHeight) + " && cls";
-			system(command.c_str());
+			//Set terminal size
+			cout << "\033[8;" << windowHeight << ";" << windowWidth << "t";
+			//Clear Screen
+#if(WIN32)
+			system("cls");
+#else
+			system("clear");
+#endif
 		}
 
 		/**
@@ -250,6 +241,9 @@ namespace QL {
 			if (selectedRow > 0) {
 				selectedRow--;
 				update_search_results();
+			}
+			else {
+				navigate_downmost();
 			}
 		}
 
