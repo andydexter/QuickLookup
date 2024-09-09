@@ -2,6 +2,7 @@
 #include<conio.h>
 #else
 #include<stdio.h>
+#define _getch getchar
 #endif
 
 using namespace std;
