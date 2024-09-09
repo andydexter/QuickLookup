@@ -30,6 +30,13 @@ using namespace std;
 
 namespace ClipboardUtils {
 	void copy_string_to_clipboard(string s) {
+		UINT format = CF_TEXT;
+		for (char c : s) {
+			if (c > 127) {
+				format = CF_UNICODETEXT;
+				break;
+			}
+		}
 		HGLOBAL globMem = GlobalAlloc(GMEM_MOVEABLE, sizeof(s));
 		if (globMem==0) throw "Failed to allocate memory for clipboard";
 		HGLOBAL writeableMem =  GlobalLock(globMem);
@@ -38,7 +45,7 @@ namespace ClipboardUtils {
 		GlobalUnlock(globMem);
 		OpenClipboard(0);
 		EmptyClipboard();
-		SetClipboardData(CF_TEXT, globMem);
+		SetClipboardData(format, globMem);
 		CloseClipboard();
 	}
 }

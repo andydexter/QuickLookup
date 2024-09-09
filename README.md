@@ -70,7 +70,9 @@ Lastly, you must instantiate a `QL::QuickLookup` object and call the `QuickLooku
 
 Running `QuickLookup::run(40, 10, 1)` will generate a terminal of size `40 x 10`, with `1` empty column on either side, and will be showing up to `6` search results.
 
-For ***Unicode support***, you should check out [this](https://stackoverflow.com/questions/78894522/inconsistent-format-of-utf-8-characters-in-c/) question's answer to configure the console to accept Unicode Characters. Do note that you currently can't copy a Unicode string to clipboard, though there are [plans](https://github.com/andydexter/QuickLookup/issues/2) for it.
+For ***Unicode support***, you should check out [this](https://stackoverflow.com/questions/78894522/inconsistent-format-of-utf-8-characters-in-c/) question's answer to configure the console to accept Unicode Characters. It should now be possible to copy unicode strings to clipboard as long as they get stored in `std::string` when calling `copy_string_to_clipboard`.
+
+~~Do note that you currently can't copy a Unicode string to clipboard, though there are [plans](https://github.com/andydexter/QuickLookup/issues/2) for it.~~
 
 ## Contributing
 Contributions are greatly appreciated! Feel free to share any questions or ideas in the **Discussions** tab, create an **Issue** for any bugs or feature requests, or:
