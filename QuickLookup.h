@@ -26,7 +26,6 @@ SOFTWARE.
 #include<iostream>
 #include<string>
 #include<vector>
-#include<conio.h>
 
 #if(WIN32)
 	#include "ClipboardWin.h"
