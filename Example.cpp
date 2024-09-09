@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "QuickLookup.h"
+#include "src/QuickLookup.h"
 #include <iostream>
 #include <map>
 #include <algorithm>

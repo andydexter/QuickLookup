@@ -22,7 +22,8 @@ if(GETCH_INPUT)
 endif()
 
 # Add source to this project's executable.
-add_executable (QuickLookupExample  "QuickLookup.h" "Example.cpp" "ClipboardWin.h" "ClipboardLin.h" "Navigation.h")
+file (GLOB QL_Sources src/*.h)
+add_executable (QuickLookupExample  "Example.cpp" ${QL_Sources})
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET QuickLookupExample PROPERTY CXX_STANDARD 20)
